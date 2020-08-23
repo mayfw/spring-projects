@@ -1,6 +1,6 @@
 package com.project.soapi.api.exceptionhandler;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Issue {
 	
 	private Integer status;
-	private LocalDateTime dateTime;
+	private OffsetDateTime dateTime;
 	private String title;
 	private List<Field> fields;
 	
@@ -51,11 +51,11 @@ public class Issue {
 		this.status = status;
 	}
 	
-	public LocalDateTime getDateTime() {
+	public OffsetDateTime getDateTime() {
 		return dateTime;
 	}
 	
-	public void setDateTime(LocalDateTime dateTime) {
+	public void setDateTime(OffsetDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
 	

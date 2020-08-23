@@ -8,7 +8,7 @@ import com.project.soapi.domain.model.Customer;
 import com.project.soapi.domain.repository.CustomerRepository;
 
 @Service
-public class CreateCustomerService {
+public class CustomerService {
 
 	@Autowired
 	private CustomerRepository customerRepository;

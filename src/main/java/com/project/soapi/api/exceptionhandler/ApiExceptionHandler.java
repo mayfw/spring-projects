@@ -1,6 +1,6 @@
 package com.project.soapi.api.exceptionhandler;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.project.soapi.domain.exception.EntityNotFoundException;
 import com.project.soapi.domain.exception.ServiceOrderException;
 
 @ControllerAdvice
@@ -32,7 +33,20 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		var issue = new Issue();
 		issue.setStatus(status.value());
 		issue.setTitle(ex.getMessage());
-		issue.setDateTime(LocalDateTime.now());
+		issue.setDateTime(OffsetDateTime.now());
+		
+		return handleExceptionInternal(ex, issue, new HttpHeaders(), status, request);
+		
+	}
+	
+	@ExceptionHandler(EntityNotFoundException.class)
+	public ResponseEntity<Object> handleEntityNotFound(ServiceOrderException ex, WebRequest request) {
+		var status = HttpStatus.NOT_FOUND;
+		
+		var issue = new Issue();
+		issue.setStatus(status.value());
+		issue.setTitle(ex.getMessage());
+		issue.setDateTime(OffsetDateTime.now());
 		
 		return handleExceptionInternal(ex, issue, new HttpHeaders(), status, request);
 		
@@ -54,7 +68,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		var issue = new Issue();
 		issue.setStatus(status.value());
 		issue.setTitle("One or more fields are invalid, please try again.");
-		issue.setDateTime(LocalDateTime.now());
+		issue.setDateTime(OffsetDateTime.now());
 		issue.setFields(fields);
 		
 		return super.handleExceptionInternal(ex, issue, headers, status, request);

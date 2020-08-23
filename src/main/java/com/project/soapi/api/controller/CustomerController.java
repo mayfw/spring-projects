@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.soapi.domain.model.Customer;
 import com.project.soapi.domain.repository.CustomerRepository;
-import com.project.soapi.domain.service.CreateCustomerService;
+import com.project.soapi.domain.service.CustomerService;
 
 @RestController
 @RequestMapping("/customers")
@@ -30,7 +30,7 @@ public class CustomerController {
 	private CustomerRepository customerRepository;
 	
 	@Autowired
-	private CreateCustomerService createCustomer;
+	private CustomerService customerService;
 	
 	@GetMapping
 	public List<Customer> list() {
@@ -51,7 +51,7 @@ public class CustomerController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Customer create(@Valid @RequestBody Customer customer) {
-		return createCustomer.create(customer);
+		return customerService.create(customer);
 	}
 	
 	@PutMapping("/{id}")
@@ -62,7 +62,7 @@ public class CustomerController {
 		}
 		
 		customer.setId(id);
-		customer = createCustomer.create(customer);
+		customer = customerService.create(customer);
 		
 		return ResponseEntity.ok(customer);
 	}
@@ -74,7 +74,7 @@ public class CustomerController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		createCustomer.delete(id);
+		customerService.delete(id);
 		
 		return ResponseEntity.noContent().build();
 	}
